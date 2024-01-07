@@ -10,3 +10,8 @@ def prim(G):
     r.PI = None
     while not Q.isEmpty():
         u = Q.extractMin()
+        for v in u.neighbours:
+            #need to test the search functionality
+            if Q.search(v.key) >=0 and G.edges[(u,v)]<v.key:
+                v.PI = u
+                v.key = G.edges[(u,v)]

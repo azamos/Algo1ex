@@ -20,14 +20,14 @@ class Graph:
         self.m = 0
         self.directed = directed
         self.vertices = [ Vertex() for i in range(1,n+1)]
-        self.edges = []
+        self.edges = {}#todo: swich to dict implementation of edges. say {(1,2):w(1,2),(1,5):w:(1,5)} and so forth
     def addEdge(self,u,v,weight = 0):
         self.vertices[u-1].neighbours.addNode(DLLNode(v))
-        self.edges.append(Edge(self.vertices[u-1],self.vertices[v-1],weight))
+        self.edges[(self.vertices[u-1],self.vertices[v-1])] = weight
         m+=1
         if self.directed is False:
             self.vertices[v-1].neighbours.addNode(DLLNode(u))
-            self.edges.append(Edge(self.vertices[v-1],self.vertices[u-1],weight))
+            self.edges[(self.vertices[v-1],self.vertices[u-1])] = weight
             m+=1
     def printVertexEdges(self,u):
         #assumption: 1<=u<=n
@@ -45,8 +45,3 @@ class Vertex:
         self.key = float("inf")#eventual minimum edge weight
         self.PI = None#from which other vertex the edge to this one came
         self.neighbours = DLL()#specifies the edges
-class Edge:
-    def __init__(self,src,dst,weight = 0) -> None:
-        self.src = src
-        self.dst = dst
-        self.weight = weight
