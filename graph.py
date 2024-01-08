@@ -31,15 +31,16 @@ class Graph:
             m+=1
 
     def printGraph(self):
+        print("Vertices are: ")
         for vertex in self.vertices:
             print(vertex.id)
+        print("Edges and their weight are: ")
         for edge in self.edges:
             print(f"w({edge})={self.edges[edge]}")
 
     def print_spanning_tree(self):
         for vertex in self.vertices:
             print(f"vertex.id = {vertex.id},vertex.key={vertex.key},vertex.PI={vertex.PI}")
-            #print(f"self.id = {vertex.id }\nself.key ={vertex.key}\n self.PI = {vertex.PI.key}")
 
 class Vertex:
     def __init__(self,index) -> None:
