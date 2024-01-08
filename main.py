@@ -24,17 +24,15 @@ for i in range(3,G.n-2,3):#Adding succesive jumps of 3 = 17 edges
 
 #Now I have a total of 54 edges
 
-G.printGraph()
+#G.printGraph()
 #print("\n before activating prim algorithm, the default data is: \n")
 #G.print_spanning_tree()#before activating prim
 T = prim_spanning_tree(G)
 print("After activating Prim algorithm to extract spanning tree...\n")
 #G.print_spanning_tree()
+#G.print_spanning_tree()
 T.printGraph()
-# print("New edge added: (2,3) with weight 10. Should change nothing\n")
-# update_tree(T,(2,3,10))
-# T.printGraph()
-
-# print("New edge added: (2,3) with weight 8. Should change only the key of 3 to 8, from 9\n")
-# update_tree(T,(2,3,8))
-# T.printGraph()
+update_tree(T,(20,1,1000))#Should not affect the tree
+T.printGraph()
+update_tree(T,(20,1,-1))#Should affect the tree
+T.printGraph()

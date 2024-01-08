@@ -83,16 +83,25 @@ class Graph:
             self.vertices[v].neighbours._delete_node_(u)#remove from neighhbours adjacency list
 
     def printGraph(self):
-        print("Edges and their weight are: ")
-        for v in self.vertices:
-            print(f"Edges emanating from {v.id}:")
-            p = v.neighbours.head
-            while p is not None:
-                u = p.value
-                print(f"({v.id},{u.id}): weight={self.edges[(v.id,u.id)]}")
-                p = p.prev
-        # for edge in self.edges:
-        #     print(f"w({edge})={self.edges[edge]}")
+        # print("Edges and their weight are: ")
+        # for v in self.vertices:
+        #     print(f"Edges emanating from {v.id}:")
+        #     p = v.neighbours.head
+        #     while p is not None:
+        #         u = p.value
+        #         print(f"({v.id},{u.id}): weight={self.edges[(v.id,u.id)]}")
+        #         p = p.prev
+        print(f"There are a total of {self.m} edges, and there are n = {self.n} vertices.")
+        # negatives = {key:value for key,value in self.edges.items() if value < 0}
+        for edge in self.edges:
+            w = self.edges[edge]
+            if w<0:
+                print(f"w({edge})=\033[91m{w}\033[0m")
+            else:
+                print(f"w({edge})={w}")
+        # print("Printint only the negative edges, if there are any: ")
+        # for key,value in negatives.items():
+        #     print(f"w({key}) = \033[91m{value}\033[0m")
 
     def print_spanning_tree(self):
         for vertex in self.vertices:

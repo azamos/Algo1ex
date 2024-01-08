@@ -74,5 +74,9 @@ def update_tree(T,newEdge):#newedge = (u,v,w(u,v)). for example: (1,4,13)
         #if we got here, it means that removing the edge (v.PI.id,v.id) from the graph
         #and replacing it with (u,v) will net us a lighter weight spanning tree
         #of the new G, which is G = (oldG(V),oldG(E) Union {(u,v)})
-        T.deleteEdge(v.PI.id,v.id)#TODO: 
+        if v.PI is not None:#If the new edge happens to be connecting us to
+            #a previously disconnected vertex, or we found an edge to the root
+            #but with a negative value, then whatever the destination vertex may be,
+            #its PI is None.Otherwise, we remove the edge from PI to v.
+            T.deleteEdge(v.PI.id,v.id)#TODO: 
         T.addEdge(u_id,v_id,new_weight)
