@@ -42,3 +42,32 @@ def prim_spanning_tree(G,r=0):
         Q.extractMin()
         #print(f"\nExtracted min: {Q.extractMin()}")
     return build_tree_from_graph(G)
+
+def update_tree(T,newEdge):#newedge = (u,v,w(u,v)). for example: (1,4,13)
+    #TODO:1. when copying the vertices from the Graph into the tree,
+    #need to update the PI field accordingly.
+    #2.Bellow, make sure that replacer.PI is not NONE.
+    #if it is, either make sure it takes the other vertex if its key < new_weight,
+    #else do nothing.
+    u_id = newEdge[0]
+    v_id = newEdge[1]
+    new_weight = newEdge[2]
+    u = T.vertices[u_id-1]
+    v = T.vertices[v_id-1]
+    if u.key <= new_weight and v.key <= new_weight:
+        #if both u,v keys are already lighter than new_weight, the tree remains the same
+        return
+    replacer = None 
+    if u.key > new_weight and v.key > new_weight:
+        #if both u and v can reduce key from newEdge, pick the one who will reduce the most
+        replacer = u if u.key>=v.key else v
+    elif u.key > new_weight and v.key <= new_weight:
+        #if only u can reduce its key
+        replacer = u
+    elif u.key<=new_weight and v.key > new_weight:
+        #if only v can reduce its key
+        replacer = v
+    #del T.edges[(replacer.PI.id,replacer.id)]#TODO: create a proper deleteEdge method in Graph
+    #TODO: ...,which will require in turn to add a remove method to DLL. Status: DONE
+    T.deleteEdge(replacer.PI.id,replacer.id)#TODO: test this to hell and back
+    T.addEdge(u_id,v_id,new_weight)

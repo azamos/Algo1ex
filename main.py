@@ -1,5 +1,5 @@
 from graph import Graph
-from prim import prim_spanning_tree
+from prim import prim_spanning_tree,update_tree
 
 G = Graph(5)#creating a DIRECTED graph with vertices = {1,2,3,4,5}
 G.addEdge(1,2,17)
@@ -20,4 +20,7 @@ G.addEdge(4,3,9)
 T = prim_spanning_tree(G)
 #print("After activating Prim algorithm to extract spanning tree...\n")
 #G.print_spanning_tree()
+T.printGraph()
+print("New edge added: (2,3) with weight 10. Should only affect the key of vertex 2\n")
+update_tree(T,(2,3,10))
 T.printGraph()
