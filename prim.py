@@ -3,6 +3,22 @@ from minheap import Minheap
 
 def build_tree_from_graph(G):
     tree = Graph(G.n)
+    print(tree.vertices)
+    #Decided not to only make a special case for the root,
+    #Since not all graphs are necessarily connected, thus
+    #we can get v.PI = None for v's other than root
+    #Though, I am not sure Prim takes that into consideration?TODO: check this.
+    for i in range(1,G.n+1):
+        #since key is a numerical value, simply copying it is all it takes.
+        tree.vertices[i-1].key = G.vertices[i-1].key
+        #PI is a bit more difficult, since in G it points to another vertex
+        #in G, however in T, we need it to point to another vertex in T,
+        #one with corresponding id to the one in G.
+        G_vert_i_PI = G.vertices[i-1].PI
+        if G_vert_i_PI is None:
+            tree.vertices[i-1].PI = None
+        else:
+            tree.vertices[i-1].PI = tree.vertices[G_vert_i_PI.id-1]
     for v in G.vertices:
         if v.PI is not None:
             tree.addEdge(v.PI.id,v.id,v.key)
@@ -48,26 +64,15 @@ def update_tree(T,newEdge):#newedge = (u,v,w(u,v)). for example: (1,4,13)
     #need to update the PI field accordingly.
     #2.Bellow, make sure that replacer.PI is not NONE.
     #if it is, either make sure it takes the other vertex if its key < new_weight,
-    #else do nothing.
+    #else do nothing.ON SECOND thoughts, logically, it should never be NONE.
+    #Only for the root it maybe None, but the root is 0, the smallest possible weight
     u_id = newEdge[0]
     v_id = newEdge[1]
     new_weight = newEdge[2]
-    u = T.vertices[u_id-1]
     v = T.vertices[v_id-1]
-    if u.key <= new_weight and v.key <= new_weight:
-        #if both u,v keys are already lighter than new_weight, the tree remains the same
-        return
-    replacer = None 
-    if u.key > new_weight and v.key > new_weight:
-        #if both u and v can reduce key from newEdge, pick the one who will reduce the most
-        replacer = u if u.key>=v.key else v
-    elif u.key > new_weight and v.key <= new_weight:
-        #if only u can reduce its key
-        replacer = u
-    elif u.key<=new_weight and v.key > new_weight:
-        #if only v can reduce its key
-        replacer = v
-    #del T.edges[(replacer.PI.id,replacer.id)]#TODO: create a proper deleteEdge method in Graph
-    #TODO: ...,which will require in turn to add a remove method to DLL. Status: DONE
-    T.deleteEdge(replacer.PI.id,replacer.id)#TODO: test this to hell and back
-    T.addEdge(u_id,v_id,new_weight)
+    if v.key > new_weight:
+        #if we got here, it means that removing the edge (v.PI.id,v.id) from the graph
+        #and replacing it with (u,v) will net us a lighter weight spanning tree
+        #of the new G, which is G = (oldG(V),oldG(E) Union {(u,v)})
+        T.deleteEdge(v.PI.id,v.id)#TODO: 
+        T.addEdge(u_id,v_id,new_weight)
