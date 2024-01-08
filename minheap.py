@@ -13,6 +13,9 @@ class Minheap:
         tmp = self.heap[j]
         self.heap[j] = self.heap[i]
         self.heap[i] = tmp
+        
+        self.elemnts[self.heap[i].id] = i
+        self.elemnts[self.heap[j].id] = j
 
     def _heapifyUp_(self,index) -> None:
         while index!=0 and self.heap[index//2].key>self.heap[index].key:
@@ -46,7 +49,9 @@ class Minheap:
     def insert(self,newVetrex):
         self.heap.append(newVetrex)
         self.n+=1
-        self.elemnts[newVetrex.id] = newVetrex
+        #self.elemnts[newVetrex.id] = newVetrex
+        self.elemnts[newVetrex.id] = self.n-1 #decided having an index is more useful
+        #I need to update the values in the heap as well as the Graph
         self._heapifyUp_(self.n-1)
 
     def search(self,id):
