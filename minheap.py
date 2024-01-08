@@ -2,6 +2,7 @@ class Minheap:
     def __init__(self) -> None:
         self.heap = []#heap of Vertexes, sorted by Vertex.key
         self.n = 0
+        self.elemnts = {}
     
     def isEmpty(self)->bool:
         return self.n==0
@@ -31,6 +32,7 @@ class Minheap:
     def extractMin(self) -> float:
         self._swap_(0,self.n-1)
         ret = self.heap.pop()
+        del self.elemnts[ret.id]#test if working
         self._heapifyDown_()
         self.n-=1
         return ret
@@ -38,20 +40,9 @@ class Minheap:
     def insert(self,newVetrex):
         self.heap.append(newVetrex)
         self.n+=1
+        self.elemnts[newVetrex.id] = newVetrex
         self._heapifyUp_(self.n-1)
 
-    def search(self,key,i = 0):
-        while i < self.n:
-            if self.heap[i].key==key:
-                return i
-            if self.heap[i].key < key:
-                return -1
-            if self.heap[i] > key:
-                a = self.search(key,2*i+1)
-                b = self.search(key,2*i+2)
-                if a >=0:
-                    return a
-                if b >= 0:
-                    return b
-                return -1
+    def search(self,id):
+        return id in self.elemnts
                 
