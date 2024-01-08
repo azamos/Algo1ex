@@ -3,7 +3,7 @@ from minheap import Minheap
 
 def build_tree_from_graph(G):
     tree = Graph(G.n)
-    print(tree.vertices)
+    #print(tree.vertices)
     #Decided not to only make a special case for the root,
     #Since not all graphs are necessarily connected, thus
     #we can get v.PI = None for v's other than root

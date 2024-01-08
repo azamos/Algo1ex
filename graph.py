@@ -83,12 +83,16 @@ class Graph:
             self.vertices[v].neighbours._delete_node_(u)#remove from neighhbours adjacency list
 
     def printGraph(self):
-        print("Vertices are: ")
-        for vertex in self.vertices:
-            print(vertex.id)
         print("Edges and their weight are: ")
-        for edge in self.edges:
-            print(f"w({edge})={self.edges[edge]}")
+        for v in self.vertices:
+            print(f"Edges emanating from {v.id}:")
+            p = v.neighbours.head
+            while p is not None:
+                u = p.value
+                print(f"({v.id},{u.id}): weight={self.edges[(v.id,u.id)]}")
+                p = p.prev
+        # for edge in self.edges:
+        #     print(f"w({edge})={self.edges[edge]}")
 
     def print_spanning_tree(self):
         for vertex in self.vertices:
