@@ -9,12 +9,19 @@ def prim_spanning_tree(G,r=0):
     print("Initiated vertex r: \n")
     G.print_spanning_tree()
     while not Q.isEmpty():
-        u = Q.extractMin()
+        #u = Q.extractMin()
+        u = Q.observeMin()#above line was source of BUG.
         #for v in u.neighbours:
-        v = u.neighbours.head
-        while v is not None:
-            #need to test the search functionality
-            if Q.search(v.id) and G.edges[(u,v)]<v.key:
+        p = u.neighbours.head
+        while p is not None:
+            v = p.value
+            if v.id==5:
+                print("breakpoint")
+            if Q.search(v.id) and G.edges[(u.id,v.id)]<v.key:
                 v.PI = u
-                v.key = G.edges[(u,v)]
-                v = v.prev
+                v.key = G.edges[(u.id,v.id)]
+                #forgot that V does not point to the same place as G.vertices[v.id-1]
+                G.vertices[v.id-1] = v
+            p = p.prev
+        #done updating all of u viable neighbours, now I can extract it
+        u = Q.extractMin()

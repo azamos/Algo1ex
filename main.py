@@ -18,3 +18,5 @@ G.printGraph()
 print("\n before activating prim algorithm, the default data is: \n")
 G.print_spanning_tree()#before activating prim
 prim_spanning_tree(G)
+print("After activating Prim algorithm to extract spanning tree...\n")
+G.print_spanning_tree()

@@ -1,6 +1,6 @@
 class DLLNode:#is a DLL Node.
     def __init__(self,value,next = None) -> None:
-        self.value = value
+        self.value = value#maybe value should be a pointer to a Vertex()
         self.next = None
         self.prev = None
 class DLL:
@@ -22,23 +22,14 @@ class Graph:
         self.vertices = [ Vertex(i) for i in range(1,n+1)]
         self.edges = {}#todo: swich to dict implementation of edges. say {(1,2):w(1,2),(1,5):w:(1,5)} and so forth
     def addEdge(self,u,v,weight = 0):
-        self.vertices[u-1].neighbours.addNode(DLLNode(v))
+        self.vertices[u-1].neighbours.addNode(DLLNode(Vertex(v)))
         self.edges[(self.vertices[u-1].id,self.vertices[v-1].id)] = weight
         self.m+=1
         if self.directed is False:
-            self.vertices[v-1].neighbours.addNode(DLLNode(u))
+            self.vertices[v-1].neighbours.addNode(DLLNode(Vertex(u)))
             self.edges[(self.vertices[v-1].id,self.vertices[u-1].id)] = weight
             m+=1
-    # def printVertexEdges(self,u):
-    #     #assumption: 1<=u<=n
-    #     vertDll = self.vertices[u-1].neighbours
-    #     p = vertDll.head
-    #     while p is not None:
-    #         print(f' ({u},{p.value})')
-    #         p=p.prev
-    # def printGraph(self):
-    #     for x in range(1,self.n+1):
-    #         self.printVertexEdges(x)
+
     def printGraph(self):
         for vertex in self.vertices:
             print(vertex.id)
